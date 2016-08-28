@@ -23,6 +23,28 @@
         .fa-btn {
             margin-right: 6px;
         }
+        .blue{
+            background-color: blue;
+        }
+.pink{
+    background-color: pink;
+}
+.grey{
+    background-color: grey;
+}
+.gold{
+    background-color: gold;
+}
+.green{
+    background-color: green;
+}
+.orange{
+    background-color: orange;
+}
+.red{
+    background-color: red;
+}
+
     </style>
 </head>
 <body id="app-layout">
@@ -47,8 +69,15 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
+                    @if (!Auth::guest() && Auth::user()->hasRole('super_admin'))
+
                     <li><a href="{{ url('/super_admin') }}">Super Admin</a></li>
+                    @endif
+                        @if (!Auth::guest() && Auth::user()->hasRole('formateur'))
+
                     <li><a href="{{ url('/formateur') }}">formateur</a></li>
+                        @endif
+
                 </ul>
 
                 <!-- Right Side Of Navbar -->

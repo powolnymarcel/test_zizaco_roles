@@ -27,8 +27,8 @@ class SuperAdminController extends Controller
      */
     public function index(Request $request)    {
         $data = User::orderBy('id','DESC')->paginate(5);
-
-        return view('super_admin',compact('data'))
+        $roles=Role::all();
+        return view('super_admin',compact('data','roles'))
 
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
@@ -103,4 +103,31 @@ class SuperAdminController extends Controller
         return redirect()->route('super_admin');
 
     }
+
+    public function destroy($id)
+
+    {
+
+        User::find($id)->delete();
+
+        return redirect()->route('super_admin');
+
+    }
+
+    public function recherche(Request$request, $role){
+        $roles=Role::all();
+
+        // use pour passer l'argu à la closure
+        $data = User::whereHas('roles', function($q) use ($role)
+        {
+            $q->where('name', $role);
+        })->paginate(5);
+
+
+        return view('recherche_par_role',compact('data','roles'))
+
+            ->with('i', ($request->input('page', 1) - 1) * 5);
+
+    }
+    
 }

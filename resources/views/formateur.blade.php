@@ -8,7 +8,7 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
-                   Vous etes super Formateur
+                   Vous etes  Formateur
                 </div>
             </div>
         </div>

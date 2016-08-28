@@ -23,6 +23,10 @@ Route::group(['middleware' => ['role:super_admin']], function() {
     Route::get('/user/{id}', ['as' => 'users.show','uses'=>'SuperAdminController@show']);
     Route::get('edit/user/{id}', ['as' => 'users.edit','uses'=>'SuperAdminController@edit']);
     Route::patch('/user/{id}',['as'=>'users.update','uses'=>'SuperAdminController@update']);
+    Route::delete('delete/user/{id}',['as'=>'users.delete','uses'=>'SuperAdminController@destroy']);
+    Route::get('/recherche/role/{role}', ['as' => 'recherche.role','uses'=>'SuperAdminController@recherche']);
+
+   
     
 });
 
