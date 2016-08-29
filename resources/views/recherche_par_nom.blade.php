@@ -64,7 +64,7 @@
 
                         <th>No</th>
 
-                        <th>Name</th>
+                        <th>Nom</th>
 
                         <th>Email</th>
 
@@ -102,8 +102,8 @@
 
                             <td>
 
-                                <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Show</a>
-                                <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Edit</a>
+                                <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Voir</a>
+                                <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Editer</a>
                                 <form action="{{route('users.delete',['id'=>$user->id])}}" method="post" style="display: inline">
                                     {{csrf_field()}}
                                     <input type="hidden" name="_method" value="DELETE">

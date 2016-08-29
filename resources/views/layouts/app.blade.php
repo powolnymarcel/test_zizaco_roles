@@ -64,7 +64,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Laravel
+                    Vetube's playground
                 </a>
             </div>
 
