@@ -28,7 +28,9 @@ Route::group(['middleware' => ['role:super_admin']], function() {
     Route::post('/recherche/nom/{nom?}', ['as' => 'recherche.nom','uses'=>'SuperAdminController@rechercheParNom']);
 
     Route::get('/autocomplete', ['as' => 'autocomplete','uses'=>'SuperAdminController@autocomplete']);
+    Route::get('/vat_checker/{vat?}', ['as' => 'vat','uses'=>'SuperAdminController@vatChecker']);
 
+ 
 
 });
 

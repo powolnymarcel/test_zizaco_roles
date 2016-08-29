@@ -144,4 +144,15 @@ class SuperAdminController extends Controller
         return response()->json($user);
 
     }
+    
+    public function vatChecker(Request $request){
+        $vat = $request->vat;
+        
+        $vatCountry = substr($vat, 0, 2); // get country code - first two letters of VAT ID
+        $vatNumber = substr($vat, 2);
+        $apiURL = "http://ec.europa.eu/taxation_customs/vies/viesquer.do?ms=".$vatCountry."&vat=".$vatNumber;
+        $resp = file_get_contents($apiURL);
+        if(strpos($resp, '="validStyle"') !== false) return '1';
+        else return '0';
+    }
 }

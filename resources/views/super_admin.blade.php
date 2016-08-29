@@ -109,6 +109,7 @@
                 @endforeach
 
             </table>
+            <input class="form-control" name="vat" id="vat" style="margin:0px auto;width:300px;" type="text">
 
             {!! $data->render() !!}
         </div>
@@ -132,5 +133,30 @@
 
     });
 
+    $(document).ready(function(){
+        $('#vat').keyup(function () {
+            var q=$(this).val();
+            if(q.length>7) {
+
+                $.ajax
+                ({
+                    type: "GET",
+                    url: "{{route('vat')}}",
+                    data: {vat:q},
+                    success: function(data, status, xhr)
+                    {
+                        console.log(data)
+                        if(data == '1'){
+                            $( '#vat').css( "border","5px solid #0f0" );
+                        }
+                        else {
+                            $( '#vat').css( "border","5px solid #f00" );
+                        }
+                    }
+                });
+            }
+        });
+
+    });
 </script>
 @endsection
