@@ -47,10 +47,10 @@
       <file leaf-file-name="recherche_par_nom.blade.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/resources/views/recherche_par_nom.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="417">
-              <caret line="49" column="22" selection-start-line="49" selection-start-column="22" selection-end-line="49" selection-end-column="22" />
+            <state relative-caret-position="323">
+              <caret line="34" column="89" selection-start-line="34" selection-start-column="89" selection-end-line="34" selection-end-column="89" />
               <folding>
-                <element signature="e#1840#1876#0#HTML" expanded="true" />
+                <element signature="e#1995#2019#0#HTML" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -482,15 +482,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1472409698157</updated>
-      <workItem from="1472409699373" duration="17343000" />
+      <workItem from="1472409699373" duration="17554000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17343000" />
+    <option name="totallyTimeSpent" value="17554000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1066" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -766,10 +766,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/recherche_par_nom.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="417">
-          <caret line="49" column="22" selection-start-line="49" selection-start-column="22" selection-end-line="49" selection-end-column="22" />
+        <state relative-caret-position="323">
+          <caret line="34" column="89" selection-start-line="34" selection-start-column="89" selection-end-line="34" selection-end-column="89" />
           <folding>
-            <element signature="e#1840#1876#0#HTML" expanded="true" />
+            <element signature="e#1995#2019#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>

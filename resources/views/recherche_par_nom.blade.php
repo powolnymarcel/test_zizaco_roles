@@ -3,51 +3,61 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-11 col-md-offset-1">
+            <div class="col-md-3">
+
                 <div class="panel panel-default">
                     <div class="panel-heading">Dashboard</div>
-
                     <div class="panel-body">
                         Vous etes super Admin
                     </div>
                 </div>
+            </div>
+            <div class="col-md-3">
 
 
 
                 <div class="panel panel-default">
                     <div class="panel-heading">Dashboard</div>
-
                     <div class="panel-body">
                         @role('super_admin')
                         <p>Zone Visible par le super_admin</p>
                         @endrole
                     </div>
                 </div>
+            </div>
+
+            <div class="col-md-3">
 
                 <div class="panel panel-default">
                     <div class="panel-heading">Recherche : Filtrer par role</div>
-
                     <div class="panel-body">
-                        <ul class="list-inline">
-                            <li><a href="{{route('super_admin')}}">Tout</a></li>
+                        <ul class="">
+                            <li><a href="{{route('super_admin')}}" class="btn btn-default">Tout</a></li>
                             @foreach($roles as $v)
                                 <li><a href="{{route('recherche.role',['role'=>$v->name])}}" class="btn btn-default">{{ $v->name }}</a></li>
                             @endforeach
                         </ul>
                     </div>
                 </div>
-                <div class="panel panel-default">
+            </div>
+
+            <div class="col-md-3">
+
+            <div class="panel panel-default">
                     <div class="panel-heading">Recherche : Filtrer par nom</div>
                     <div class="panel-body">
                         <ul class="list-inline">
                             <form action="{{route('recherche.nom')}}" method="post" class="text-center">
                                 {{csrf_field()}}
-                                <input class="typeahead form-control" name="nom" style="margin:0px auto;width:300px;" type="text">
+                                <input class="typeahead form-control" name="nom" style="margin:0px auto;" type="text">
                                 <input type="submit" class="btn btn-default" value="rechercher">
                             </form>
                         </ul>
                     </div>
+            </div>
                 </div>
+
+
                 <table class="table table-bordered">
 
                     <tr>
