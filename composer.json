@@ -7,7 +7,10 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
-        "zizaco/entrust": "5.2.x-dev",    "laravelcollective/html": "~5.0"
+        "zizaco/entrust": "5.2.x-dev",
+        "laravelcollective/html": "~5.0",
+        "webpatser/laravel-uuid": "2.*",
+        "mcamara/laravel-localization": "1.1.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

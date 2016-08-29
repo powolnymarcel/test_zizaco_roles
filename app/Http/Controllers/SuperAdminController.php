@@ -117,7 +117,7 @@ class SuperAdminController extends Controller
     public function recherche(Request$request, $role){
         $roles=Role::all();
 
-        // use pour passer l'argu à la closure
+        // use pour passer l'argu $role à la closure
         $data = User::whereHas('roles', function($q) use ($role)
         {
             $q->where('name', $role);

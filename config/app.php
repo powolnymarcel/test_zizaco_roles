@@ -156,7 +156,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
-        'Collective\Html\HtmlServiceProvider',
+        Collective\Html\HtmlServiceProvider::class,
+        Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class
     ],
 
     /*
@@ -205,6 +206,8 @@ return [
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
         'Form' => 'Collective\Html\FormFacade',
         'Html' => 'Collective\Html\HtmlFacade',
+        'Uuid' => Webpatser\Uuid\Uuid::class,
+        'LaravelLocalization'   => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class
     ],
 
 ];

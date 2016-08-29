@@ -4,6 +4,6 @@
 
 @section('content')
 
-    <h1>You don't have permission.</h1>
+    <h1>Vous n'avez pas les droits suffisants, contactez l'administrateur afin, qu'eventuellement, il augmente vos droits .</h1>
 
 @endsection

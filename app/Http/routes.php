@@ -11,11 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Route::auth();
+
+// app/Http/routes.php
+
+Route::group(['prefix' => LaravelLocalization::setLocale()], function()
+{
+    Route::get('/', ['as' => 'accueil','uses'=>'PostController@index']);
+
+});
+
 
 
 Route::group(['middleware' => ['role:super_admin']], function() {
