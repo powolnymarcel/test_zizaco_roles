@@ -6,6 +6,6 @@ return [
     'titre' => 'Titre',
     'contenu' => 'Contenu',
     'auteur' => 'Auteur',
-    'bienvenu' => 'Bienvenu'
+    'bienvenu' => 'Bienvenu(e)'
 
 ];

@@ -43,7 +43,7 @@
                     <ul class="list-inline">
                         <form action="{{route('recherche.nom')}}" method="post" class="text-center">
                             {{csrf_field()}}
-                            <input class="typeahead form-control" name="nom" style="margin:0px auto;width:300px;" type="text">
+                            <input class="typeahead form-control" name="nom" style="margin:0px auto;width:300px;" autocomplete="off" type="text">
                             <input type="submit" class="btn btn-default" value="rechercher">
                         </form>
                     </ul>
