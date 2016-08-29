@@ -25,9 +25,11 @@ Route::group(['middleware' => ['role:super_admin']], function() {
     Route::patch('/user/{id}',['as'=>'users.update','uses'=>'SuperAdminController@update']);
     Route::delete('delete/user/{id}',['as'=>'users.delete','uses'=>'SuperAdminController@destroy']);
     Route::get('/recherche/role/{role}', ['as' => 'recherche.role','uses'=>'SuperAdminController@recherche']);
+    Route::post('/recherche/nom/{nom?}', ['as' => 'recherche.nom','uses'=>'SuperAdminController@rechercheParNom']);
 
-   
-    
+    Route::get('/autocomplete', ['as' => 'autocomplete','uses'=>'SuperAdminController@autocomplete']);
+
+
 });
 
 Route::group(['middleware' => ['role:super_admin|formateur']], function() {

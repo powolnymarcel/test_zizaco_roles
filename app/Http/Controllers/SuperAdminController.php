@@ -129,5 +129,19 @@ class SuperAdminController extends Controller
             ->with('i', ($request->input('page', 1) - 1) * 5);
 
     }
-    
+    public function rechercheParNom(Request $request){
+        $roles=Role::all();
+        $nom = $request->nom;
+        $data = User::where('name', $nom)->paginate(5);
+        return view('recherche_par_nom',compact('data','roles'))
+
+            ->with('i', ($request->input('page', 1) - 1) * 5);
+    }
+
+    public function autocomplete(Request $request){
+        $user = User::select("name as name")->where("name","LIKE","%{$request->input('nom')}%")->get();
+
+        return response()->json($user);
+
+    }
 }
