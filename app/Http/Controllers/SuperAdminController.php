@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use App\Role;
+use App\RoleUser;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -28,7 +29,15 @@ class SuperAdminController extends Controller
     public function index(Request $request)    {
         $data = User::orderBy('id','DESC')->paginate(5);
         $roles=Role::all();
-        return view('super_admin',compact('data','roles'))
+        $user=RoleUser::where('role_id','=',1)->count();
+        $formateur=RoleUser::where('role_id','=',2)->count();
+        $admin_franchise=RoleUser::where('role_id','=',3)->count();
+        $super_admin= RoleUser::where('role_id','=',4)->count();
+        $collaborateur_externe= RoleUser::where('role_id','=',5)->count();
+        $collaborateur_interne= RoleUser::where('role_id','=',6)->count();
+        $partenaire_commercial= RoleUser::where('role_id','=',7)->count();
+        $totalUtilisateurs=User::count();
+        return view('super_admin',compact('data','roles','super_admin','user','formateur','admin_franchise','collaborateur_externe','collaborateur_interne','partenaire_commercial','totalUtilisateurs'))
 
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }

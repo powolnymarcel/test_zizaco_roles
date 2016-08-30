@@ -20,6 +20,36 @@
                 <div class="panel-body">
                     @role('super_admin')
                     <p>Zone Visible par le super_admin</p>
+                    <div id="no-more-tables">
+                        <h3>Nombres d'utilisateurs par roles</h3>
+                        <table class="col-md-12 table-bordered table-striped table-condensed cf">
+                            <thead class="cf">
+                            <tr>
+                                <th>Super Admin</th>
+                                <th>Formateurs</th>
+                                <th >Utilisateurs</th>
+                                <th >Admin franchise</th>
+                                <th >Collaborateur externe</th>
+                                <th >Collaborateur interne</th>
+                                <th >Partenaire commercial</th>
+                                <th >TOTAL utilisateurs</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td data-title="Admin">{{$super_admin}}</td>
+                                <td data-title="formateur">{{$formateur}}</td>
+                                <td data-title="user">{{$user}}</td>
+                                <td data-title="admin_franchise">{{$admin_franchise}}</td>
+                                <td data-title="collaborateur_externe">{{$collaborateur_externe}}</td>
+                                <td data-title="collaborateur_interne">{{$collaborateur_interne}}</td>
+                                <td data-title="partenaire_commercial">{{$partenaire_commercial}}</td>
+                                <td data-title="total">{{$totalUtilisateurs}}</td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     @endrole
                 </div>
             </div>
@@ -30,7 +60,25 @@
                     <ul class="list-inline">
                         <li><a href="{{route('super_admin')}}">Tout</a></li>
                         @foreach($roles as $v)
-                            <li><a href="{{route('recherche.role',['role'=>$v->name])}}" class="btn btn-default">{{ $v->name }}</a></li>
+                            <li><a href="{{route('recherche.role',['role'=>$v->name])}}" class="btn btn-default">
+                                    {{$v->name }}
+                                    @if($v->name == 'user')
+                                        {{$user}}
+                                    @elseif($v->name == 'formateur')
+                                        {{$formateur}}
+                                    @elseif($v->name == 'admin_franchise')
+                                        {{$admin_franchise}}
+                                    @elseif($v->name == 'super_admin')
+                                        {{$super_admin}}
+                                    @elseif($v->name == 'collaborateur_externe')
+                                        {{$collaborateur_externe}}
+                                    @elseif($v->name == 'collaborateur_interne')
+                                        {{$collaborateur_interne}}
+                                    @elseif($v->name == 'partenaire_commercial')
+                                        {{$partenaire_commercial}}
+
+                                    @endif
+                                </a></li>
                         @endforeach
                     </ul>
                 </div>
