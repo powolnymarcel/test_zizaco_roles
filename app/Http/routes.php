@@ -22,6 +22,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
     Route::get('/', ['as' => 'accueil','uses'=>'PostController@index']);
 
 });
+Route::get('/produits/prix/{orderPrix?}', ['as' => 'produits','uses'=>'ProduitsController@index']);
+Route::get('/produits/nom/{orderNom?}', ['as' => 'produits','uses'=>'ProduitsController@index']);
 
 
 

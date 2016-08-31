@@ -2,29 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Post;
-use App\Role;
+use App\Produit;
 use Illuminate\Http\Request;
-use App\Http\Controllers\ProduitsController;
-use App\Http\Requests;
-use Illuminate\Support\Facades\App;
 
-class PostController extends Controller
+use App\Http\Requests;
+
+class ProduitsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $locale= app()->getLocale();
-        $posts= Post::select('titre_'.$locale.' as titre',
-                            'contenu_'.$locale.' as contenu',
-                            'user_id','uuid')->get();
-        $roles=Role::all();
-        $produits=App::call('App\Http\Controllers\ProduitsController@index');
-        return view('welcome')->withPosts($posts)->withRoles($roles)->withProduits($produits);
+        if(isset($request->orderPrix)){
+            $order=$request->orderPrix;
+            $produits=Produit::orderBy('prix', $order)->paginate(9);
+            return $produits;
+        }
+        if(isset($request->orderNom)){
+            $order=$request->orderNom;
+            $produits=Produit::orderBy('nom', $order)->paginate(9);
+            return $produits;
+        }
     }
 
     /**

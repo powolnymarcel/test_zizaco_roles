@@ -5,7 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
-{    protected $guarded = ['id'];
+{    
+    protected $guarded = ['id'];
 
     protected $fillable = [
         'titre', 'contenu', 'user_id','uuid',
