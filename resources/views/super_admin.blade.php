@@ -8,7 +8,7 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
-                   Vous etes super Admin
+                   {{trans('traduction.youare')}}:  super Admin
                 </div>
             </div>
 
@@ -91,13 +91,21 @@
                     <ul class="list-inline">
                         <form action="{{route('recherche.nom')}}" method="post" class="text-center">
                             {{csrf_field()}}
-                            <input class="typeahead form-control" name="nom" style="margin:0px auto;width:300px;" autocomplete="off" type="text">
+                            <div class="form-group">
+                                <input class="typeahead form-control formControlDisparaitSalorpard" name="nom" style="margin:0px auto;width:300px;" autocomplete="off" type="text">
+
+                            </div>
                             <input type="submit" class="btn btn-default" value="rechercher">
                         </form>
                     </ul>
                 </div>
             </div>
-
+            <hr>
+            <hr>
+            <h2>TABLEAU LARAVEL:</h2>
+            <hr>
+            <hr>
+            <hr>
             <table class="table table-bordered">
 
                 <tr>
@@ -157,6 +165,66 @@
                 @endforeach
 
             </table>
+            {!! $data->render() !!}
+            <hr>
+            <hr>
+            <h2>TABLEAU VUEJS -> AJAX:</h2>
+
+            <hr>
+            <hr>
+            <div class="container  tableauVue">
+                <div class="col-md-8 col-md-offset-2">
+                    <div id="app">
+                        <ul class="list-group">
+                            <h2>Recherche AJAX dans ce tableau</h2>
+                            <input type="text" v-model="searchQuerysurLaPageResultatAffichee">
+                            <hr>
+                            <button class="btn btn-info" v-on:click="fetchItems()">Recharger resultats</button>
+                            <hr>
+                            <h2>Recherche AJAX dans tout le tableau de resultats</h2>
+                            <input type="text" v-model="searchQuerySurToutLesUser" @keyUp="rechercheUserParticulier(searchQuerySurToutLesUser) | debounce 100">
+                            <hr>
+                            <li class="list-group-item" v-for="item in items | filterBy searchQuerysurLaPageResultatAffichee ">
+                                <a href="/item/@{{ item.id }}">
+                                    @{{ item.name }}   <span class="pull-right">@{{ item.email }}</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <nav>
+                            <ul class="pagination">
+                                <li v-if="pagination.current_page > 1">
+                                    <a href="#" aria-label="Previous"
+                                       @click.prevent="changePage(pagination.current_page - 1)">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li v-for="page in pagesNumber"
+                                    v-bind:class="[ page == isActived ? 'active' : '']">
+                                    <a href="#"
+                                       @click.prevent="changePage(page)">@{{ page }}</a>
+                                </li>
+                                <li v-if="pagination.current_page < pagination.last_page">
+                                    <a href="#" aria-label="Next"
+                                       @click.prevent="changePage(pagination.current_page + 1)">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+<pre>
+    @{{ $data | json }}
+</pre>
+                    </div>
+
+                </div>
+            </div>
+            <hr>
+            <hr>
+            <hr>
+            <hr>
+            <hr>
+            <hr>
+
             <div class="panel panel-default">
                 <div class="panel-heading">Verifier TVA - Verification AJAX sur le service VIES de la comm européenne</div>
                 <div class="panel-body">
@@ -169,12 +237,12 @@
                 </div>
             </div>
 
-            {!! $data->render() !!}
+
         </div>
     </div>
 </div>
-<script type="text/javascript">
-
+@section('scripts')
+    <script>
     var path = "{{ route('autocomplete') }}";
 
     $('input.typeahead').typeahead({
@@ -216,5 +284,84 @@
         });
 
     });
-</script>
+
+
+    Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#token').getAttribute('value');
+    Vue.http.options.root = 'http://localhost/zizaco/public';
+    //Vue.http.options.root = 'http://ondego.be/doc/laradoc/public/';
+
+    Vue.config.debug = true;
+    Vue.config.devtools = true;
+    new Vue({
+        el: '.tableauVue',
+        data: {
+            pagination: {
+                total: 0,
+                per_page: 5,
+                from: 1,
+                to: 0,
+                current_page: 1
+            },
+            offset: 4,// left and right padding from the pagination <span>,just change it to see effects
+            items: []
+        },
+        ready: function () {
+            this.fetchItems(this.pagination.current_page);
+        },
+        computed: {
+            isActived: function () {
+                return this.pagination.current_page;
+            },
+            pagesNumber: function () {
+                if (!this.pagination.to) {
+                    return [];
+                }
+                var from = this.pagination.current_page - this.offset;
+                if (from < 1) {
+                    from = 1;
+                }
+                var to = from + (this.offset * 2);
+                if (to >= this.pagination.last_page) {
+                    to = this.pagination.last_page;
+                }
+                var pagesArray = [];
+                while (from <= to) {
+                    pagesArray.push(from);
+                    from++;
+                }
+                return pagesArray;
+            }
+        },
+        methods: {
+            fetchItems: function (page) {
+
+                var data = {page: page};
+                this.$http.get('http://localhost/zizaco/public/users?page='+page).then(function (response) {
+                    //look into the routes file and format your response
+                    console.info(response)
+                    this.$set('items', response.data.data.data);
+                    this.$set('pagination', response.data.pagination);
+
+                }, function (error) {
+                    // handle error
+                });
+            },
+            rechercheUserParticulier:function(searchQuerySurToutLeUser){
+                this.$http.get('http://localhost/zizaco/public/recherche/user/'+searchQuerySurToutLeUser).then(function (response) {
+                    //look into the routes file and format your response
+                    console.info(response)
+                    this.$set('items', response.data.data.data);
+                    this.$set('pagination', response.data.pagination);
+                }, function (error) {
+                    // handle error
+                });
+            },
+            changePage: function (page) {
+                this.pagination.current_page = page;
+                this.fetchItems(page);
+            }
+        }
+    });
+    </script>
+@endsection
 @endsection

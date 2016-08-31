@@ -164,4 +164,38 @@ class SuperAdminController extends Controller
         if(strpos($resp, '="validStyle"') !== false) return '1';
         else return '0';
     }
+    
+    public function tousLesUsers(){
+        $results =  User::orderBy('id','DESC')->paginate(5);
+        $response = [
+            'pagination' => [
+                'total' => $results->total(),
+                'per_page' => $results->perPage(),
+                'current_page' => $results->currentPage(),
+                'last_page' => $results->lastPage(),
+                'from' => $results->firstItem(),
+                'to' => $results->lastItem()
+            ],
+            'data' => $results
+        ];
+
+        return $response;
+    }
+//  Recherche VUEJS sur touts les USER
+    public function rechercheUser(Request $request){
+        $results =  User::where("name","LIKE","%{$request->nom}%")->orderBy('id','DESC')->paginate(5);
+        $response = [
+            'pagination' => [
+                'total' => $results->total(),
+                'per_page' => $results->perPage(),
+                'current_page' => $results->currentPage(),
+                'last_page' => $results->lastPage(),
+                'from' => $results->firstItem(),
+                'to' => $results->lastItem()
+            ],
+            'data' => $results
+        ];
+
+        return $response;
+    }
 }

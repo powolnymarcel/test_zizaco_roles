@@ -4,24 +4,39 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-1">
-            <div class="panel panel-default">
+            <div class="panel panel-default animated bounceInDown">
                 <div class="panel-heading">{{trans('traduction.bienvenu')}}</div>
 
                 <div class="panel-body">
-                   <ul class="list-inline">
+                   <ul class="list-inline nav nav-justified">
 
                        @foreach($posts as $post)
-                           <li>
-                               <h2>{{trans('traduction.titre')}}: {{$post->titre}}</h2>
-                               <p>{{trans('traduction.contenu')}} : {{$post->contenu}}</p>
-                               <p>{{trans('traduction.auteur')}} : {{$post->user->email}}</p>
-                               <p>Roles:
+                           <li class="padbot30">
+                               <img src="{{asset('img/'.$post->image)}}"  class="img img-responsive ">
+                               <h2>{{trans('traduction.titre')}}: {{$post->titre}} </h2>
+                               <span class="pull-right text-center">
+                                   <div class="testCoeur">
+                                       <img src="{{asset('img/'.$post->user->image)}}" class="img-responsive img-circle avatar" width="80px"  alt="avatar image">
+                                       <span class="heartbeat  "> ...</span>
+
+                                   </div>
+                                   <h5>{{$post->user->name}}</h5>
+                               </span>
+                               <p><u>{{trans('traduction.contenu')}} :</u><br> {{$post->contenu}}</p>
+                               <p><u>{{trans('traduction.auteur')}} :</u><br> {{$post->user->email}}</p>
+                               <p><u>Roles:</u><br>
                                    @foreach($post->user->roles as $role)
                                        <label class="label label-success">{{$role->name}}</label>
                                        @endforeach
 
                                </p>
-                               <p>Uuid: {{$post->uuid}}</p>
+                               <p><u>Uuid:</u><br> {{$post->uuid}}</p>
+                               <p><u>{{trans('traduction.postele')}}: </u><br> {{date('d/m/Y', strtotime($post->datecreation))}}</p>
+                               <p><u>{{trans('traduction.etiquette')}}: </u><br> <p class="label label-info">Tag</p></p>
+
+                           <span class="pull-right text-center">
+                                 <a href="{{route('lepost',['uuid'=>$post->uuid])}}" class="btn btn-default lirePlus">Lire plus...</a>
+                               </span>
                            </li>
                            <hr>
                            @endforeach
@@ -31,11 +46,11 @@
             </div>
         </div>
 <div class="col-md-3" id="produits">
-    <div class="panel panel-default">
+    <div class="panel panel-default animated bounceInRight">
         <div class="panel-heading"> {{trans('traduction.enVente')}}</div>
         <div class="panel-heading">
-        Trier: <br> <button v-on:click="sorting('prix')" class="btn btn-block btn-info">{{trans('traduction.prix')}} @{{ trixPrix }}</button>
-            <button v-on:click="sorting('nom')" class="btn btn-block btn-info">{{trans('traduction.nom')}} @{{ trixNom }}</button>
+        Trier: <br> <button v-on:click="sorting('prix')" class="btn btn-block btn-default">{{trans('traduction.prix')}} @{{ trixPrix }}</button>
+            <button v-on:click="sorting('nom')" class="btn btn-block btn-default ">{{trans('traduction.nom')}} @{{ trixNom }}</button>
         </div>
 
         <div class="panel-body">
@@ -46,7 +61,21 @@
             <v-paginator :resource.sync="produits"  v-ref:sortingtableauproduits :options="options" :resource_url="resource_url"></v-paginator>
 
         </div>
-    </div></div>
+    </div>
+    <hr>
+    <div class="panel panel-default animated bounceInDown">
+        <div class="panel-heading"> {{trans('traduction.etiquette')}}</div>
+        <div class="panel-body">
+        <ul>
+            <li class="label label-info">Tag</li>
+            <li class="label label-info">Tag</li>
+            <li class="label label-info">Tag</li>
+            <li class="label label-info">Tag</li>
+        </ul>
+
+        </div>
+    </div>
+</div>
     </div>
 </div>
     @section('scripts')
@@ -188,6 +217,27 @@
             //
             //                        }
             //                    },
+
+
+            $(".testCoeur").hover(
+                    function () {
+                        $(".avatar").addClass('animated jello ');
+                    },
+                    function () {
+                        $(".avatar").removeClass('animated jello ');
+                    }
+
+            );
+            $(".lirePlus").hover(
+                    function () {
+                        $(this).addClass('animated flash infinite ');
+                    },
+                    function () {
+                        $(this).removeClass('animated flash infinite');
+                    }
+
+            );
+
 
         </script>
     @endsection

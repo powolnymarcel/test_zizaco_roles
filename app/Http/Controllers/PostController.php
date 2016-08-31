@@ -21,12 +21,15 @@ class PostController extends Controller
         $locale= app()->getLocale();
         $posts= Post::select('titre_'.$locale.' as titre',
                             'contenu_'.$locale.' as contenu',
-                            'user_id','uuid')->get();
+                            'user_id','uuid','created_at as datecreation','image as image')->get();
         $roles=Role::all();
         $produits=App::call('App\Http\Controllers\ProduitsController@index');
         return view('welcome')->withPosts($posts)->withRoles($roles)->withProduits($produits);
     }
 
+    public function lePost(Request $request){
+        dd($request->uuid);
+    }
     /**
      * Show the form for creating a new resource.
      *
