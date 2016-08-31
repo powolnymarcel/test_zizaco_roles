@@ -86,7 +86,7 @@
 
 
             <div class="panel panel-default">
-                <div class="panel-heading">Recherche : Filtrer par nom</div>
+                <div class="panel-heading">Recherche : Filtrer par nom   -- autocomplete AJAX sur base de données USER </div>
                 <div class="panel-body">
                     <ul class="list-inline">
                         <form action="{{route('recherche.nom')}}" method="post" class="text-center">
@@ -158,7 +158,7 @@
 
             </table>
             <div class="panel panel-default">
-                <div class="panel-heading">Verifier TVA</div>
+                <div class="panel-heading">Verifier TVA - Verification AJAX sur le service VIES de la comm européenne</div>
                 <div class="panel-body">
                         <ul>
                             <li>Valide : <em>BE0412121524</em></li>
