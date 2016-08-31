@@ -1,5 +1,5 @@
 # Laravel PHP Framework
-AU début cela devait juste etre un test d'implémentation du "zizaco ROLES" et puis j'ai continué de codé dessus
+AU début cela devait juste etre un test d'implémentation du "zizaco ROLES" puis j'ai continuer de faire des tests dessus
 
 ![](http://ondego.be/divers/vet2.png)
 ![](http://ondego.be/divers/vet3.png)
