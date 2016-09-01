@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-11 col-md-offset-1">
+        <div class="col-md-8">
             <div class="panel panel-default">
                 <div class="panel-heading">Dashboard</div>
 
@@ -15,7 +15,7 @@
 
 
             <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
+                <div class="panel-heading">Stats</div>
 
                 <div class="panel-body">
                     @role('super_admin')
@@ -53,14 +53,16 @@
                     @endrole
                 </div>
             </div>
+        </div>
+        <div class="col-md-4">
 
             <div class="panel panel-default">
                 <div class="panel-heading">Recherche : Filtrer par role</div>
                 <div class="panel-body">
-                    <ul class="list-inline">
-                        <li><a href="{{route('super_admin')}}">Tout</a></li>
+                    <ul class="list-inline text-center">
+                        <li class="btn-block"><a href="{{route('super_admin')}}"  class="btn btn-default ">Tout</a></li>
                         @foreach($roles as $v)
-                            <li><a href="{{route('recherche.role',['role'=>$v->name])}}" class="btn btn-default">
+                            <li class="btn-block"><a href="{{route('recherche.role',['role'=>$v->name])}}" class="btn btn-default">
                                     {{$v->name }}
                                     @if($v->name == 'user')
                                         {{$user}}
@@ -83,73 +85,32 @@
                     </ul>
                 </div>
             </div>
-
-
-            <div class="panel panel-default">
-                <div class="panel-heading">Recherche : Filtrer par nom   -- autocomplete AJAX sur base de données USER </div>
-                <div class="panel-body">
-                    <ul class="list-inline">
-                        <form action="{{route('recherche.nom')}}" method="post" class="text-center">
-                            {{csrf_field()}}
-                            <div class="form-group">
-                                <input class="typeahead form-control formControlDisparaitSalorpard" name="nom" style="margin:0px auto;width:300px;" autocomplete="off" type="text">
-
-                            </div>
-                            <input type="submit" class="btn btn-default" value="rechercher">
-                        </form>
-                    </ul>
-                </div>
-            </div>
-            <hr>
-            <hr>
+        </div>
+<div class="row">
+        <div class="col-md-8">
             <h2>TABLEAU LARAVEL:</h2>
-            <hr>
-            <hr>
-            <hr>
             <table class="table table-bordered">
-
                 <tr>
-
                     <th>No</th>
-
                     <th>Nom</th>
-
                     <th>Email</th>
-
                     <th>Roles</th>
-
                     <th width="280px">Action</th>
-
                 </tr>
-
                 @foreach ($data as $key => $user)
-
                     <tr>
-
                         <td>{{ ++$i }}</td>
-
                         <td>{{ $user->name }}</td>
-
                         <td>{{ $user->email }}</td>
-
                         <td>
-
                             @if(!empty($user->roles))
-
                                 @foreach($user->roles as $v)
-
-
                                     <label class="label  @if($v->name=='user')blue"@elseif($v->name=='formateur')pink"@elseif($v->name=='admin_franchise')grey"@elseif($v->name=='super_admin')gold"@elseif($v->name=='collaborateur_externe')green"@elseif($v->name=='collaborateur_interne')orange"@elseif($v->name=='partenaire_commercial')red"@endif
                                     >{{ $v->name}}</label>
-
                                 @endforeach
-
                             @endif
-
                         </td>
-
                         <td>
-
                             <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Voir</a>
                             <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Editer</a>
                             <form action="{{route('users.delete',['id'=>$user->id])}}" method="post" style="display: inline">
@@ -157,21 +118,45 @@
                                 <input type="hidden" name="_method" value="DELETE">
                                 <input type="submit" class="btn btn-danger" value="Supprimer">
                             </form>
-
                         </td>
-
                     </tr>
-
                 @endforeach
-
             </table>
             {!! $data->render() !!}
-            <hr>
+            </div>
+    <div class="col-md-4">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Recherche : Filtrer par nom   -- autocomplete AJAX sur base de données USER </div>
+            <div class="panel-body">
+                <ul class="list-inline">
+                    <form action="{{route('recherche.nom')}}" method="post" class="text-center">
+                        {{csrf_field()}}
+                        <div class="form-group">
+                            <input class="typeahead form-control formControlDisparaitSalorpard" name="nom" style="margin:0px auto;width:300px;" autocomplete="off" type="text">
+
+                        </div>
+                        <input type="submit" class="btn btn-default" value="rechercher">
+                    </form>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Verifier TVA - Verification AJAX sur le service VIES de la comm européenne</div>
+            <div class="panel-body">
+                <ul>
+                    <li>Valide : <em>BE0412121524</em></li>
+                    <li>Invalide : <em>BE03412121524</em></li>
+                </ul>
+                <input class="form-control" name="vat" id="vat" style="margin:0px auto;width:300px;" type="text">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
             <hr>
             <h2>TABLEAU VUEJS -> AJAX:</h2>
-
-            <hr>
-            <hr>
             <div class="container  tableauVue">
                 <div class="col-md-8 col-md-offset-2">
                     <div id="app">
@@ -215,31 +200,14 @@
     @{{ $data | json }}
 </pre>
                     </div>
-
                 </div>
             </div>
             <hr>
-            <hr>
-            <hr>
-            <hr>
-            <hr>
-            <hr>
-
-            <div class="panel panel-default">
-                <div class="panel-heading">Verifier TVA - Verification AJAX sur le service VIES de la comm européenne</div>
-                <div class="panel-body">
-                        <ul>
-                            <li>Valide : <em>BE0412121524</em></li>
-                            <li>Invalide : <em>BE03412121524</em></li>
-                        </ul>
-                    <input class="form-control" name="vat" id="vat" style="margin:0px auto;width:300px;" type="text">
-
-                </div>
-            </div>
-
 
         </div>
     </div>
+</div>
+</div>
 </div>
 @section('scripts')
     <script>
