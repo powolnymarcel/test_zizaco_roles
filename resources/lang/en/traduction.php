@@ -16,6 +16,8 @@ return [
     'formateur' => 'Course instructor',
     'utilisateur' => 'User',
     'notag' => 'No tgas',
+    'pasDePost' => 'No posts',
+
     'bienvenu' => 'Welcome',
     'enVente'=>'Products to sell'
 ];

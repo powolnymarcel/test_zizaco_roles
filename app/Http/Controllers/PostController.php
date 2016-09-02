@@ -28,13 +28,13 @@ class PostController extends Controller
 
     public function postsParTag(Tag $tag){
         return view('posts.par_tag')->with([
-            'posts'=>$tag->posts()->get()
+            'posts'=>$tag->posts()->isLive()->get()
         ]);
 
     }
 
     public function lePost(Request $request){
-        $lePost=Post::laSelectionPerso()->where('slug' ,$request->slug)->get();
+        $lePost=Post::laSelectionPerso()->where('slug' ,$request->slug)->isLive()->get();
         return view('posts.le_post')->withLepost($lePost);
 
     }

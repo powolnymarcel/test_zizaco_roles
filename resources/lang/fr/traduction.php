@@ -15,6 +15,7 @@ return [
     'youare' => 'Vous etes',
     'formateur' => 'Formateur',
     'notag' => 'Pas d\'etiquettes',
+    'pasDePost' => 'Pas d\'articles',
     
     'utilisateur' => 'Utilisateur',
     'bienvenu' => 'Bienvenu(e)',

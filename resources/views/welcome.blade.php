@@ -9,6 +9,7 @@
 
                 <div class="panel-body">
                    <ul class="list-inline nav nav-justified">
+                       @if($posts->count())
                        @foreach($posts as $post)
                            <li class="padbot30">
                                <img src="{{asset('img/'.$post->image)}}"  class="img img-responsive ">
@@ -42,7 +43,11 @@
                                </span>
                            </li>
                            <hr>
+
                            @endforeach
+                       @else
+                           {{trans('traduction.pasDePost')}}
+                       @endif
                    </ul>
 
                 </div>
