@@ -10,7 +10,8 @@
         "zizaco/entrust": "5.2.x-dev",
         "laravelcollective/html": "~5.0",
         "webpatser/laravel-uuid": "2.*",
-        "mcamara/laravel-localization": "1.1.*"
+        "mcamara/laravel-localization": "1.1.*",
+        "nesbot/carbon": "^1.21"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

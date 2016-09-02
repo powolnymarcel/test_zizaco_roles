@@ -9,7 +9,6 @@
 
                 <div class="panel-body">
                    <ul class="list-inline nav nav-justified">
-
                        @foreach($posts as $post)
                            <li class="padbot30">
                                <img src="{{asset('img/'.$post->image)}}"  class="img img-responsive ">
@@ -32,10 +31,14 @@
                                </p>
                                <p><u>Uuid:</u><br> {{$post->uuid}}</p>
                                <p><u>{{trans('traduction.postele')}}: </u><br> {{date('d/m/Y', strtotime($post->datecreation))}}</p>
-                               <p><u>{{trans('traduction.etiquette')}}: </u><br> <p class="label label-info">Tag</p></p>
+                               <p><u>{{trans('traduction.etiquette')}}: </u><br>
+                               @foreach($post->tags as $tag)
+                                   <a href="{{route('posts.tag',['tag'=>$tag->slug])}}" class="label label-info"> {{$tag->nom}} </a>
 
+                           @endforeach
+                            </p>
                            <span class="pull-right text-center">
-                                 <a href="{{route('lepost',['uuid'=>$post->uuid])}}" class="btn btn-default lirePlus">Lire plus...</a>
+                                 <a href="{{route('lepost',['slug'=>$post->slug])}}" class="btn btn-default lirePlus">Lire plus...</a>
                                </span>
                            </li>
                            <hr>
@@ -63,18 +66,7 @@
         </div>
     </div>
     <hr>
-    <div class="panel panel-default animated bounceInDown">
-        <div class="panel-heading"> {{trans('traduction.etiquette')}}</div>
-        <div class="panel-body">
-        <ul>
-            <li class="label label-info">Tag</li>
-            <li class="label label-info">Tag</li>
-            <li class="label label-info">Tag</li>
-            <li class="label label-info">Tag</li>
-        </ul>
-
-        </div>
-    </div>
+   @include('partials.sidebar')
 </div>
     </div>
 </div>

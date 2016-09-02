@@ -157,7 +157,9 @@ return [
         App\Providers\RouteServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
-        Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class
+        Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class,
+        App\Providers\TagServiceProvider::class,
+
     ],
 
     /*

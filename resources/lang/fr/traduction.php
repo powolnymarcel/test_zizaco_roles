@@ -14,6 +14,8 @@ return [
     'etiquette' => 'Etiquettes',
     'youare' => 'Vous etes',
     'formateur' => 'Formateur',
+    'notag' => 'Pas d\'etiquettes',
+    
     'utilisateur' => 'Utilisateur',
     'bienvenu' => 'Bienvenu(e)',
     'enVente'=>'Produits en vente',

@@ -15,6 +15,7 @@ return [
     'youare' => 'You are',
     'formateur' => 'Course instructor',
     'utilisateur' => 'User',
+    'notag' => 'No tgas',
     'bienvenu' => 'Welcome',
     'enVente'=>'Products to sell'
 ];

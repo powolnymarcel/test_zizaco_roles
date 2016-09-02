@@ -20,7 +20,8 @@ Route::auth();
 Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 {
     Route::get('/', ['as' => 'accueil','uses'=>'PostController@index']);
-    Route::get('/post/{uuid}', ['as' => 'lepost','uses'=>'PostController@lePost']);
+    Route::get('/post/{slug}', ['as' => 'lepost','uses'=>'PostController@lePost']);
+    Route::get('/posts/{tag}', ['as' => 'posts.tag','uses'=>'PostController@postsParTag']);
 
     //Routes SUPER ADMIN
     Route::group(['middleware' => ['role:super_admin']], function() {

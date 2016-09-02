@@ -29,4 +29,13 @@ class User extends Authenticatable
         return $this->hasMany('App\Post');
     }
 
+    //Juste pour le test...
+    public function nomEtEmail(){
+        return $this->name . '< nom + email >' . $this->email;
+    }
+
+    public function avatar(){
+        return 'https://www.gravatar.com/avatar/'.md5($this->email).'?s=60&d=mm';
+    }
+
 }

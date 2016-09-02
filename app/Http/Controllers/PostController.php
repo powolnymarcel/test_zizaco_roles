@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use App\Role;
+use App\Tag;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ProduitsController;
 use App\Http\Requests;
@@ -18,17 +19,24 @@ class PostController extends Controller
      */
     public function index()
     {
-        $locale= app()->getLocale();
-        $posts= Post::select('titre_'.$locale.' as titre',
-                            'contenu_'.$locale.' as contenu',
-                            'user_id','uuid','created_at as datecreation','image as image')->get();
+        $posts= Post::laSelectionPerso()->isLive()->get();
         $roles=Role::all();
+        $tags=Tag::all();
         $produits=App::call('App\Http\Controllers\ProduitsController@index');
-        return view('welcome')->withPosts($posts)->withRoles($roles)->withProduits($produits);
+        return view('welcome')->withPosts($posts)->withRoles($roles)->withProduits($produits)->withTags($tags);
+    }
+
+    public function postsParTag(Tag $tag){
+        return view('posts.par_tag')->with([
+            'posts'=>$tag->posts()->get()
+        ]);
+
     }
 
     public function lePost(Request $request){
-        dd($request->uuid);
+        $lePost=Post::laSelectionPerso()->where('slug' ,$request->slug)->get();
+        return view('posts.le_post')->withLepost($lePost);
+
     }
     /**
      * Show the form for creating a new resource.
