@@ -159,6 +159,8 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class,
         App\Providers\TagServiceProvider::class,
+        \Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
+
 
     ],
 
@@ -209,7 +211,11 @@ return [
         'Form' => 'Collective\Html\FormFacade',
         'Html' => 'Collective\Html\HtmlFacade',
         'Uuid' => Webpatser\Uuid\Uuid::class,
-        'LaravelLocalization'   => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class
+        'LaravelLocalization'   => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class,
+        'Cart'            => \Gloudemans\Shoppingcart\Facades\Cart::class,
+
+
+
     ],
 
 ];

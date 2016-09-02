@@ -12,7 +12,6 @@
 */
 
 
-
 Route::auth();
 
 // PREFIX POUR LES LANGUES
@@ -22,6 +21,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
     Route::get('/', ['as' => 'accueil','uses'=>'PostController@index']);
     Route::get('/post/{slug}', ['as' => 'lepost','uses'=>'PostController@lePost']);
     Route::get('/posts/{tag}', ['as' => 'posts.tag','uses'=>'PostController@postsParTag']);
+    Route::post('/ajout/produit', ['as' => 'produit.ajout','uses'=>'PostController@ajoutProduitPanier']);
+    Route::get('/recuperation/contenu/panier', ['as' => 'panier','uses'=>'PostController@recupererContenuPanier']);
 
     //Routes SUPER ADMIN
     Route::group(['middleware' => ['role:super_admin']], function() {

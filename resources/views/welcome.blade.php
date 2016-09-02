@@ -1,9 +1,56 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container zoneAchat">
     <div class="row">
         <div class="col-md-8 col-md-offset-1">
+            // Display the content in a View.
+            <table>
+                <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th>Subtotal</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <?php foreach(Cart::content() as $row) :?>
+
+                <tr>
+                    <td>
+                        <p><strong><?php echo $row->name; ?></strong></p>
+                        <p><?php echo ($row->options->has('size') ? $row->options->size : ''); ?></p>
+                    </td>
+                    <td><input type="text" value="<?php echo $row->qty; ?>"></td>
+                    <td>$<?php echo $row->price; ?></td>
+                    <td>$<?php echo $row->total; ?></td>
+                </tr>
+
+                <?php endforeach;?>
+
+                </tbody>
+
+                <tfoot>
+                <tr>
+                    <td colspan="2">&nbsp;</td>
+                    <td>Subtotal</td>
+                    <td><?php echo Cart::subtotal(); ?></td>
+                </tr>
+                <tr>
+                    <td colspan="2">&nbsp;</td>
+                    <td>Tax</td>
+                    <td><?php echo Cart::tax(); ?></td>
+                </tr>
+                <tr>
+                    <td colspan="2">&nbsp;</td>
+                    <td>Total</td>
+                    <td><?php echo Cart::total(); ?></td>
+                </tr>
+                </tfoot>
+            </table>
             <div class="panel panel-default animated bounceInDown">
                 <div class="panel-heading">{{trans('traduction.bienvenu')}}</div>
 
@@ -53,6 +100,16 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-3" id="panier">
+            <div class="panel panel-default animated bounceInRight">
+                <div class="panel-heading">Panier</div>
+                <div class="panel-body">
+
+                  Total : @{{panier}}
+
+                </div>
+            </div>
+        </div>
 <div class="col-md-3" id="produits">
     <div class="panel panel-default animated bounceInRight">
         <div class="panel-heading"> {{trans('traduction.enVente')}}</div>
@@ -64,7 +121,7 @@
         <div class="panel-body">
 
                 <ul>
-                    <li v-for="produit in produits "  class="text-left liProdEnVente"><a href="">@{{produit.nom}} <span class="pull-right"><i class="label label-info  ">@{{produit.prix}} €</i></span></a></li>
+                    <li v-for="produit in produits "  class="text-left liProdEnVente"><a href="">@{{produit.nom}} <span class="pull-right"><i class="label label-success"  @click.prevent="ajoutPanier(produit.id)">+</i><i class="label label-info  ">@{{produit.prix}} €</i></span></a></li>
                 </ul>
             <v-paginator :resource.sync="produits"  v-ref:sortingtableauproduits :options="options" :resource_url="resource_url"></v-paginator>
 
@@ -81,11 +138,11 @@
             Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#token').getAttribute('value');
             Vue.http.options.root = 'http://localhost/zizaco/public';
             //Vue.http.options.root = 'http://ondego.be/doc/laradoc/public/';
-
             Vue.config.debug = true;
             Vue.config.devtools = true;
+
           vm  =  new Vue({
-                el: '#produits',
+                el: '.zoneAchat',
 
                 data: {
                     produits: [],
@@ -99,6 +156,9 @@
                     trixPrix:'',
                     trixNom:''
                 },
+              ready: function() {
+                  this.recupererPanier();
+              },
                 components: {
                     VPaginator: VuePaginator
 
@@ -132,6 +192,42 @@
                             }
                         }
                     },
+                    recupererPanier:function(){
+                        this.$http.get('recuperation/contenu/panier')
+                                .then(function(data){
+                                            //console.log("Recuperation compétences OK");
+                                            //console.log(data);
+                                            this.$set('panier', data.data);
+                                            //this.competences= data.data;
+
+                                        },
+                                        function(data){
+                                            console.log("Recuperation panier PAS OK");
+                                            console.log(data);
+
+                                        });
+                    },
+                    ajoutPanier:function(id){
+                        var produit = {
+                            'id':id
+                        };
+                        Vue.http.post('ajout/produit',produit).then(function(response){
+                            console.log('ok');
+                            console.log(response)
+                            //toastr.success('Parcours modifié', 'ONDEGO ADMIN');
+                            vm.recupererPanier();
+
+                        }, function(response){
+                            console.log('pas ok');
+                            var reponseServeur = response.json();
+                            //Si plusieurs rreurs on boucle sur les erreur et on affiche un toastr par erreur
+                            // for(var index in reponseServeur) {
+                            //     var attr = reponseServeur[index];
+                            //     toastr.warning(attr, 'ONDEGO ADMIN');
+                            // }
+
+                        });
+                    }
                 }
             });
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$      INFO          $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$

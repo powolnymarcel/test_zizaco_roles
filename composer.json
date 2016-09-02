@@ -11,7 +11,8 @@
         "laravelcollective/html": "~5.0",
         "webpatser/laravel-uuid": "2.*",
         "mcamara/laravel-localization": "1.1.*",
-        "nesbot/carbon": "^1.21"
+        "nesbot/carbon": "^1.21",
+        "gloudemans/shoppingcart": "^2.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

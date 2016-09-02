@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\Produit;
 use App\Role;
 use App\Tag;
+use Cart;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ProduitsController;
 use App\Http\Requests;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Session;
 
 class PostController extends Controller
 {
@@ -19,6 +22,8 @@ class PostController extends Controller
      */
     public function index()
     {
+        //Vider la session
+        //Session::flush();
         $posts= Post::laSelectionPerso()->isLive()->get();
         $roles=Role::all();
         $tags=Tag::all();
@@ -103,4 +108,17 @@ class PostController extends Controller
     {
         //
     }
+
+    public function recupererContenuPanier(){
+        $total= Cart::total();
+        return $total;
+
+    }
+
+    public function ajoutProduitPanier(Request $request){
+        $leProduit=Produit::where('id','=',$request->id)->get();
+        Cart::add($leProduit[0]->id, $leProduit[0]->nom,1, $leProduit[0]->prix);
+
+        $total= Cart::total();
+        return $total;    }
 }
