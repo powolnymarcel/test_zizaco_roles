@@ -89,7 +89,7 @@
                 <div class="panel-heading">Panier</div>
                 <div class="panel-body">
 
-                  Total : @{{panier}}
+                  Total : @{{ tableauPanier[3]}}
 
                 </div>
             </div>
@@ -109,7 +109,7 @@
                         <a href="#" >@{{produit.nom}}
                             <span class="pull-right">
                                 <i class="label label-info  ">@{{produit.prix}} €</i>&nbsp;
-                                <button class="btn btn-success btn-sm" :disabled="boutonsDesactive" @click="ajoutPanier(produit.id)">+</button>
+                                <button class="btn btn-success btn-sm" :disabled="boutonsDesactive" @click.prevent="ajoutPanier(produit.id)">+</button>
                             </span>
                             </a></li>
                 </ul>
@@ -122,12 +122,13 @@
    @include('partials.sidebar')
 </div>
         <div class="col-md-3" id="panier">
-            <div class="panel panel-danger animated bounceInRight">
+            <div class="panel panel-default animated bounceInRight">
                 <div class="panel-heading">Shortcuts </div>
                 <div class="panel-body">
-                    <a href="{{route('destructionsession')}}"  class="btn btn-block btn-default">Flush de la session</a>
+                    <a href="{{route('destructionsession')}}"  class="btn btn-block btn-danger">Flush de la session</a>
                     <a href="{{route('logs')}}"  class="btn btn-block btn-default">Logs</a>
-                    <a href="{{route('phpinfo')}}"  class="btn btn-block btn-default">phpinfo()</a>
+                    <a href="{{route('resetlogs')}}"  class="btn btn-block btn-warning">Reset Logs</a>
+                    <a href="{{route('phpinfo')}}"  class="btn btn-block btn-info">phpinfo()</a>
 
 
                 </div>
@@ -232,7 +233,7 @@
                                         });
                     },
                     ajoutPanier:function(id){
-                        event.preventDefault()
+                        //event.preventDefault()
 
                         //var boutonCible =event.target;
                        //boutonCible.setAttribute("disabled", "disabled");
@@ -242,16 +243,17 @@
                         };
                         Vue.http.post('ajout/produit',id).then(function(response){
                             console.log('ok');
-                            console.log(response)
                             //toastr.success('Parcours modifié', 'ONDEGO ADMIN');
                             toastr.success('Ajout bien effectué', 'ONDEGO');
                             vm.boutonsDesactive=false;
                             //boutonCible.removeAttribute("disabled", "disabled");
+                            this.$set('panier', response.data[0]);
+                            this.$set('tableauPanier', response.data)
 
-                            vm.recupererTotalPanier();
-                            vm.recupererPanierSousFormeDeTableau();
+                            //vm.recupererTotalPanier();
+                            //vm.recupererPanierSousFormeDeTableau();
 
-                        }, function(response){
+                        }.bind(this), function(response){
                             console.log('pas ok');
                             var reponseServeur = response;
                             //Si plusieurs rreurs on boucle sur les erreur et on affiche un toastr par erreur

@@ -17,8 +17,7 @@ class PostController extends Controller
 {
 
     public function destructionsession(){
-        Session::flush();
-        return redirect()->route('accueil');
+       
     }
     /**
      * Display a listing of the resource.

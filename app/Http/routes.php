@@ -19,14 +19,28 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 {
 
     Route::get('/', ['as' => 'accueil','uses'=>'PostController@index']);
-    Route::get('/destructionsession', ['as' => 'destructionsession','uses'=>'PostController@destructionsession']);
+    
+    //Les shortcut appli
+    Route::get('/destructionsession', ['as' => 'destructionsession',function(){
+        Session::flush();
+        return redirect()->route('accueil');
+    }]);
     Route::get('/logs', ['as' => 'logs', function () {
         $logs = \File::get(storage_path().'/logs/laravel.log');
         dd($logs);
     }]);
+    
+
     Route::get('/phpinfo', ['as' => 'phpinfo', function () {
         phpinfo();
     }]);
+    Route::get('/resetlogs', ['as' => 'resetlogs', function () {
+        \File::delete(storage_path().'/logs/laravel.log');
+        return redirect()->route('accueil');
+    }]);
+    
+    
+
     Route::get('/post/{slug}', ['as' => 'lepost','uses'=>'PostController@lePost']);
     Route::get('/posts/{tag}', ['as' => 'posts.tag','uses'=>'PostController@postsParTag']);
     Route::post('/ajout/produit', ['as' => 'produit.ajout','uses'=>'EcommerceController@ajoutProduitPanier']);
