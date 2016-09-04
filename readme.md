@@ -1,7 +1,7 @@
 # Laravel PHP Framework
 AU début cela devait juste etre un test d'implémentation du "zizaco ROLES" puis j'ai continuer de faire des tests dessus
 
-![demo](http://ondego.be/divers/vet.gif)
+![demo](gif/vet.gif)
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
 [![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
