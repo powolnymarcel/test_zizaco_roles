@@ -11,18 +11,28 @@
 |
 */
 
-
 Route::auth();
 
 // PREFIX POUR LES LANGUES
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 {
+
     Route::get('/', ['as' => 'accueil','uses'=>'PostController@index']);
+    Route::get('/destructionsession', ['as' => 'destructionsession','uses'=>'PostController@destructionsession']);
+    Route::get('/logs', ['as' => 'logs', function () {
+        $logs = \File::get(storage_path().'/logs/laravel.log');
+        dd($logs);
+    }]);
+    Route::get('/phpinfo', ['as' => 'phpinfo', function () {
+        phpinfo();
+    }]);
     Route::get('/post/{slug}', ['as' => 'lepost','uses'=>'PostController@lePost']);
     Route::get('/posts/{tag}', ['as' => 'posts.tag','uses'=>'PostController@postsParTag']);
-    Route::post('/ajout/produit', ['as' => 'produit.ajout','uses'=>'PostController@ajoutProduitPanier']);
-    Route::get('/recuperation/contenu/panier', ['as' => 'panier','uses'=>'PostController@recupererContenuPanier']);
+    Route::post('/ajout/produit', ['as' => 'produit.ajout','uses'=>'EcommerceController@ajoutProduitPanier']);
+    Route::get('/recuperation/tableau/panier', ['as' => 'panierSousFormeDeTableau','uses'=>'EcommerceController@panierSousFormeDeTableau']);
+    Route::get('/recuperation/total/panier', ['as' => 'panier','uses'=>'EcommerceController@recupererTotalPanier']);
+
 
     //Routes SUPER ADMIN
     Route::group(['middleware' => ['role:super_admin']], function() {

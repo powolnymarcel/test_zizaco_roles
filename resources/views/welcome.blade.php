@@ -4,50 +4,33 @@
 <div class="container zoneAchat">
     <div class="row">
         <div class="col-md-8 col-md-offset-1">
-            // Display the content in a View.
-            <table>
-                <thead>
+            <table  class="table-bordered table-striped table-condensed cf">
+                <thead class="cf">
                 <tr>
-                    <th>Product</th>
-                    <th>Qty</th>
-                    <th>Price</th>
-                    <th>Subtotal</th>
+                    <th>Produit</th>
+                    <th>Quantitée</th>
+                    <th class="numeric">prix</th>
                 </tr>
                 </thead>
-
-                <tbody>
-
-                <?php foreach(Cart::content() as $row) :?>
-
-                <tr>
-                    <td>
-                        <p><strong><?php echo $row->name; ?></strong></p>
-                        <p><?php echo ($row->options->has('size') ? $row->options->size : ''); ?></p>
-                    </td>
-                    <td><input type="text" value="<?php echo $row->qty; ?>"></td>
-                    <td>$<?php echo $row->price; ?></td>
-                    <td>$<?php echo $row->total; ?></td>
+                <tbody >
+                <tr v-for="item in tableauPanier[0]">
+                    <td data-title="Produit">@{{ item.name }}</td>
+                    <td data-title="Quantitée">@{{ item.qty }}</td>
+                    <td data-title="SousTotal" class="numeric">@{{ item.price }}</td>
                 </tr>
-
-                <?php endforeach;?>
-
                 </tbody>
-
                 <tfoot>
                 <tr>
-                    <td colspan="2">&nbsp;</td>
-                    <td>Subtotal</td>
-                    <td><?php echo Cart::subtotal(); ?></td>
+                    <td>SousTotal</td>
+                    <td>@{{ tableauPanier[1] }}</td>
                 </tr>
                 <tr>
-                    <td colspan="2">&nbsp;</td>
-                    <td>Tax</td>
-                    <td><?php echo Cart::tax(); ?></td>
+                    <td>TVA</td>
+                    <td>@{{ tableauPanier[2] }}</td>
                 </tr>
                 <tr>
-                    <td colspan="2">&nbsp;</td>
                     <td>Total</td>
-                    <td><?php echo Cart::total(); ?></td>
+                    <td>@{{ tableauPanier[3] }}</td>
                 </tr>
                 </tfoot>
             </table>
@@ -100,6 +83,7 @@
                 </div>
             </div>
         </div>
+
         <div class="col-md-3" id="panier">
             <div class="panel panel-default animated bounceInRight">
                 <div class="panel-heading">Panier</div>
@@ -121,25 +105,47 @@
         <div class="panel-body">
 
                 <ul>
-                    <li v-for="produit in produits "  class="text-left liProdEnVente"><a href="">@{{produit.nom}} <span class="pull-right"><i class="label label-success"  @click.prevent="ajoutPanier(produit.id)">+</i><i class="label label-info  ">@{{produit.prix}} €</i></span></a></li>
+                    <li v-for="produit in produits "  class="text-left liProdEnVente">
+                        <a href="#" >@{{produit.nom}}
+                            <span class="pull-right">
+                                <i class="label label-info  ">@{{produit.prix}} €</i>&nbsp;
+                                <button class="btn btn-success btn-sm" :disabled="boutonsDesactive" @click="ajoutPanier(produit.id)">+</button>
+                            </span>
+                            </a></li>
                 </ul>
             <v-paginator :resource.sync="produits"  v-ref:sortingtableauproduits :options="options" :resource_url="resource_url"></v-paginator>
 
         </div>
     </div>
+
     <hr>
    @include('partials.sidebar')
 </div>
-    </div>
-</div>
+        <div class="col-md-3" id="panier">
+            <div class="panel panel-danger animated bounceInRight">
+                <div class="panel-heading">Shortcuts </div>
+                <div class="panel-body">
+                    <a href="{{route('destructionsession')}}"  class="btn btn-block btn-default">Flush de la session</a>
+                    <a href="{{route('logs')}}"  class="btn btn-block btn-default">Logs</a>
+                    <a href="{{route('phpinfo')}}"  class="btn btn-block btn-default">phpinfo()</a>
+
+
+                </div>
+            </div>
+        </div>
+    </div><!-- FIN ROW -->
+</div><!-- FIN CONTAINER -->
+@section('styles')
+    <link rel="stylesheet" href="lib/toastr/toastr.min.css">
+@endsection
     @section('scripts')
+        <script src="lib/toastr/toastr.min.js"></script>
         <script>
 
             Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#token').getAttribute('value');
             Vue.http.options.root = 'http://localhost/zizaco/public';
-            //Vue.http.options.root = 'http://ondego.be/doc/laradoc/public/';
-            Vue.config.debug = true;
-            Vue.config.devtools = true;
+            //Vue.config.debug = true;
+            //Vue.config.devtools = true;
 
           vm  =  new Vue({
                 el: '.zoneAchat',
@@ -154,10 +160,12 @@
                         de: '{{trans('traduction.de')}}'
                     },
                     trixPrix:'',
-                    trixNom:''
+                    trixNom:'',
+                    boutonsDesactive:false
                 },
               ready: function() {
-                  this.recupererPanier();
+                  this.recupererTotalPanier();
+                  this.recupererPanierSousFormeDeTableau();
               },
                 components: {
                     VPaginator: VuePaginator
@@ -192,8 +200,24 @@
                             }
                         }
                     },
-                    recupererPanier:function(){
-                        this.$http.get('recuperation/contenu/panier')
+                    recupererPanierSousFormeDeTableau:function(){
+                        this.$http.get('recuperation/tableau/panier')
+                                .then(function(data){
+                                            //console.log("Recuperation compétences OK");
+                                            //console.log(data);
+                                            this.$set('tableauPanier', data.data);
+                                            //this.competences= data.data;
+                                             console.log(this.tableauPanier);
+                                            console.log("Recuperation tableauPanier  OK");
+                                        },
+                                        function(data){
+                                            console.log("Recuperation tableauPanier PAS OK");
+                                            console.log(data);
+
+                                        });
+                    },
+                    recupererTotalPanier:function(){
+                        this.$http.get('recuperation/total/panier')
                                 .then(function(data){
                                             //console.log("Recuperation compétences OK");
                                             //console.log(data);
@@ -208,18 +232,28 @@
                                         });
                     },
                     ajoutPanier:function(id){
-                        var produit = {
+                        event.preventDefault()
+
+                        //var boutonCible =event.target;
+                       //boutonCible.setAttribute("disabled", "disabled");
+                        vm.boutonsDesactive =true;
+                        var id = {
                             'id':id
                         };
-                        Vue.http.post('ajout/produit',produit).then(function(response){
+                        Vue.http.post('ajout/produit',id).then(function(response){
                             console.log('ok');
                             console.log(response)
                             //toastr.success('Parcours modifié', 'ONDEGO ADMIN');
-                            vm.recupererPanier();
+                            toastr.success('Ajout bien effectué', 'ONDEGO');
+                            vm.boutonsDesactive=false;
+                            //boutonCible.removeAttribute("disabled", "disabled");
+
+                            vm.recupererTotalPanier();
+                            vm.recupererPanierSousFormeDeTableau();
 
                         }, function(response){
                             console.log('pas ok');
-                            var reponseServeur = response.json();
+                            var reponseServeur = response;
                             //Si plusieurs rreurs on boucle sur les erreur et on affiche un toastr par erreur
                             // for(var index in reponseServeur) {
                             //     var attr = reponseServeur[index];
@@ -334,4 +368,5 @@
 
         </script>
     @endsection
+
 @endsection

@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\Session;
 
 class PostController extends Controller
 {
+
+    public function destructionsession(){
+        Session::flush();
+        return redirect()->route('accueil');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -22,8 +27,6 @@ class PostController extends Controller
      */
     public function index()
     {
-        //Vider la session
-        //Session::flush();
         $posts= Post::laSelectionPerso()->isLive()->get();
         $roles=Role::all();
         $tags=Tag::all();
@@ -109,16 +112,4 @@ class PostController extends Controller
         //
     }
 
-    public function recupererContenuPanier(){
-        $total= Cart::total();
-        return $total;
-
-    }
-
-    public function ajoutProduitPanier(Request $request){
-        $leProduit=Produit::where('id','=',$request->id)->get();
-        Cart::add($leProduit[0]->id, $leProduit[0]->nom,1, $leProduit[0]->prix);
-
-        $total= Cart::total();
-        return $total;    }
 }
