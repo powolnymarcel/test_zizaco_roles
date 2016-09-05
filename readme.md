@@ -4,6 +4,8 @@ AU début cela devait juste etre un test d'implémentation du "zizaco ROLES" pui
     + Redirection apres paiement
     + Listing commandes page USER
     + PAIEMENT 3D SECURE !
+    + Paiement Paypal, SOFORT (Voir doc !)
+    + Galleries images, maybe...
 
 
 ![demo](gif/vet.gif)
