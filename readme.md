@@ -15,6 +15,7 @@ AU début cela devait juste etre un test d'implémentation du "zizaco ROLES" pui
 ![demo](gif/vet.gif)
 <hr>
 # TODO:
+    + Refactoriser les vues + refactoriser le code et le commenter
     + Redirection apres paiement
     + Listing commandes page USER
     + PAIEMENT 3D SECURE !
