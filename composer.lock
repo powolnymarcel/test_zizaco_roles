@@ -4,9 +4,51 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "436eeb98b8959c8112a8e91a702f7b7b",
-    "content-hash": "70f44b3173badf2492218db50dd34343",
+    "hash": "66de068e989d6eb19634235c4c795de8",
+    "content-hash": "83d32f8d31f668fee88bac5d73adb25c",
     "packages": [
+        {
+            "name": "adyen/php-api-library",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Adyen/adyen-php-api-library.git",
+                "reference": "c4f309f615144d2d5628826784b82ca9a2b1574c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Adyen/adyen-php-api-library/zipball/c4f309f615144d2d5628826784b82ca9a2b1574c",
+                "reference": "c4f309f615144d2d5628826784b82ca9a2b1574c",
+                "shasum": ""
+            },
+            "require": {
+                "monolog/monolog": "~1.16",
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4",
+                "squizlabs/php_codesniffer": "~2.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Adyen\\": "src/Adyen/"
+                },
+                "classmap": [
+                    "src/Adyen/Service/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "A PHP client library for accessing Adyen APIs",
+            "homepage": "https://github.com/Adyen/adyen-php-api-library",
+            "keywords": [
+                "adyen"
+            ],
+            "time": "2016-03-07 08:43:40"
+        },
         {
             "name": "classpreloader/classpreloader",
             "version": "3.0.0",

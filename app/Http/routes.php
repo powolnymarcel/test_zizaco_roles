@@ -17,8 +17,9 @@ Route::auth();
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 {
-
     Route::get('/', ['as' => 'accueil','uses'=>'PostController@index']);
+
+    Route::post('/verficationPaiement', ['as' => 'verficationPaiement','uses'=>'EcommerceController@verficationPaiement']);
     
     //Les shortcut appli
     Route::get('/destructionsession', ['as' => 'destructionsession',function(){

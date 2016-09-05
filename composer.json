@@ -12,7 +12,8 @@
         "webpatser/laravel-uuid": "2.*",
         "mcamara/laravel-localization": "1.1.*",
         "nesbot/carbon": "^1.21",
-        "gloudemans/shoppingcart": "^2.1"
+        "gloudemans/shoppingcart": "^2.1",
+        "adyen/php-api-library": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

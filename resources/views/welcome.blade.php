@@ -90,6 +90,7 @@
                 <div class="panel-body">
 
                   Total : @{{ tableauPanier[3]}}
+                    <div v-show="btn_achat" class="btn btn-success" data-toggle="modal" data-target="#myModal">Payer</div>
 
                 </div>
             </div>
@@ -120,6 +121,7 @@
 
     <hr>
    @include('partials.sidebar')
+    @include('partials.modalpaiement2')
 </div>
         <div class="col-md-3" id="panier">
             <div class="panel panel-default animated bounceInRight">
@@ -141,6 +143,17 @@
 @endsection
     @section('scripts')
         <script src="lib/toastr/toastr.min.js"></script>
+        <script src="https://test.adyen.com/hpp/cse/js/7614570506780374.shtml"></script>
+        <script type="text/javascript">
+            // the form element to encrypt
+            var form    = document.getElementById('adyen-encrypted-form');
+            // See adyen.encrypt.simple.html for details on the options to use
+            var options = {};
+
+            // Create the form.
+            // Note that the method is on the Adyen object, not the adyen.encrypt object.
+            adyen.createEncryptedForm( form, options);
+        </script>
         <script>
 
             Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#token').getAttribute('value');
@@ -162,10 +175,10 @@
                     },
                     trixPrix:'',
                     trixNom:'',
-                    boutonsDesactive:false
+                    boutonsDesactive:false,
+                    btn_achat:false,
                 },
               ready: function() {
-                  this.recupererTotalPanier();
                   this.recupererPanierSousFormeDeTableau();
               },
                 components: {
@@ -209,6 +222,9 @@
                                             this.$set('tableauPanier', data.data);
                                             //this.competences= data.data;
                                              console.log(this.tableauPanier);
+                                    if(parseInt(this.tableauPanier[3]) >0){
+                                        vm.btn_achat =true;
+                                    }
                                             console.log("Recuperation tableauPanier  OK");
                                         },
                                         function(data){
@@ -217,27 +233,29 @@
 
                                         });
                     },
-                    recupererTotalPanier:function(){
-                        this.$http.get('recuperation/total/panier')
-                                .then(function(data){
-                                            //console.log("Recuperation compétences OK");
-                                            //console.log(data);
-                                            this.$set('panier', data.data);
-                                            //this.competences= data.data;
+                   //recupererTotalPanier:function(){
+                   //    this.$http.get('recuperation/total/panier')
+                   //            .then(function(data){
+                   //                        //console.log("Recuperation compétences OK");
+                   //                        //console.log(data);
+                   //                        this.$set('panier', data.data);
+                   //                        //this.competences= data.data;
 
-                                        },
-                                        function(data){
-                                            console.log("Recuperation panier PAS OK");
-                                            console.log(data);
+                   //                    },
+                   //                    function(data){
+                   //                        console.log("Recuperation panier PAS OK");
+                   //                        console.log(data);
 
-                                        });
-                    },
+                   //                    });
+                   //},
                     ajoutPanier:function(id){
                         //event.preventDefault()
 
                         //var boutonCible =event.target;
                        //boutonCible.setAttribute("disabled", "disabled");
                         vm.boutonsDesactive =true;
+                        vm.btn_achat =true;
+
                         var id = {
                             'id':id
                         };
