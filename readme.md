@@ -1,5 +1,10 @@
 # Laravel PHP Framework
 AU début cela devait juste etre un test d'implémentation du "zizaco ROLES" puis j'ai continuer de faire des tests dessus
+TODO
+Redirection apres paiement
+Listing commandes page USER
+PAIEMENT 3D SECURE !
+
 
 ![demo](gif/vet.gif)
 
