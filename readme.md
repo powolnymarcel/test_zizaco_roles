@@ -6,13 +6,15 @@ AU début cela devait juste etre un test d'implémentation du "zizaco ROLES" pui
     + du VueJS
     + Relations polymorphiques
     + Du paiement en ligne
+    + De la verification de TVA en AJAX
+    + Du multilangue (à perfectionner...)
     + ... and more to come.
 
 <hr>
-## Demo
+## Demo (pas à jour!) :
 ![demo](gif/vet.gif)
 <hr>
-+ TODO:
+# TODO:
     + Redirection apres paiement
     + Listing commandes page USER
     + PAIEMENT 3D SECURE !
