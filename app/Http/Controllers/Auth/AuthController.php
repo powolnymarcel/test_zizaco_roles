@@ -68,6 +68,9 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+        //On attache le role "user"
+        //TODO: $user->estValide= 0;
+        
         $user->attachRole(1);
         return $user;
     }
