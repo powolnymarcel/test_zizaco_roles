@@ -1,11 +1,12 @@
 # Just playing and testing around...
-AU début cela devait juste etre un test d'implémentation du "zizaco ROLES" puis j'ai continuer de faire des tests sur le projet et au final, il y a:
-+ du role
-+ de l'ajax
-+ du VueJS
-+ Relations polymorphiques
-+ Du paiement en ligne
-+ ... and more to come.
+AU début cela devait juste etre un test d'implémentation du "zizaco ROLES" puis j'ai continuer de faire des tests sur le projet et au final:
++ Il y a:
+    + du role
+    + de l'ajax
+    + du VueJS
+    + Relations polymorphiques
+    + Du paiement en ligne
+    + ... and more to come.
 
 <hr>
 + TODO:
