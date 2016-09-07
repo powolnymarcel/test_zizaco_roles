@@ -11,6 +11,8 @@ return [
     'nom' => 'Nom',
     'trier' => 'Trier',
     'panier' => 'Panier',
+    'moncompte' => 'Mon compte',
+    
     'payer' => 'Payer',
     'produit' => 'Produits',
     'quantite' => 'Quantitée',

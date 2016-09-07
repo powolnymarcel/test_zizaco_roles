@@ -14,6 +14,6 @@ class Commande extends Model
     //Une commande peut contenir plusieurs produits
     public function produits()
     {
-        return $this->belongsToMany('App\Commande', 'commande_produit', 'produit_id', 'commande_id');
+        return $this->belongsToMany('App\Produit', 'commande_produit', 'commande_id', 'produit_id');
     }
 }

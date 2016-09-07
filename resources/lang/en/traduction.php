@@ -10,6 +10,7 @@ return [
     'prix' => 'Price',
     'nom' => 'Name',
     'trier' => 'Orde by',
+    'moncompte' => 'My account',
     'panier' => 'Basket',
     'payer' => 'Pay',
     'produit' => 'Products',

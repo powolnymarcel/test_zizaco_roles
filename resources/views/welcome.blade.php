@@ -94,7 +94,7 @@
                     <div class="panel-body">
 
                         Total : @{{ tableauPanier[3]}}
-                        <div v-show="btn_achat" class="btn btn-success" data-toggle="modal"
+                        <div v-show="btn_achat"  v-on:click="recupererPanierSousFormeDeTableau()" class="btn btn-success" data-toggle="modal"
                              data-target="#myModal">{{trans('traduction.payer')}}</div>
 
                     </div>
@@ -138,8 +138,8 @@
                 <div class="panel panel-default animated bounceInRight">
                     <div class="panel-heading">Shortcuts</div>
                     <div class="panel-body">
-                        <a href="{{route('destructionsession')}}" class="btn btn-block btn-danger">Flush de la
-                            session</a>
+                        <a href="{{route('destructionsession')}}" class="btn btn-block btn-danger">Flush de la session</a>
+                        <a href="{{route('destructionpanier')}}" class="btn btn-block btn-danger">Flush panier</a>
                         <a href="{{route('logs')}}" class="btn btn-block btn-default">Logs</a>
                         <a href="{{route('resetlogs')}}" class="btn btn-block btn-warning">Reset Logs</a>
                         <a href="{{route('phpinfo')}}" class="btn btn-block btn-info">phpinfo()</a>
@@ -156,16 +156,7 @@
 @section('scripts')
     <script src="lib/toastr/toastr.min.js"></script>
     <script src="https://test.adyen.com/hpp/cse/js/7614570506780374.shtml"></script>
-    <script type="text/javascript">
-        // the form element to encrypt
-        var form = document.getElementById('adyen-encrypted-form');
-        // See adyen.encrypt.simple.html for details on the options to use
-        var options = {};
 
-        // Create the form.
-        // Note that the method is on the Adyen object, not the adyen.encrypt object.
-        adyen.createEncryptedForm(form, options);
-    </script>
     <script>
 
         Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#token').getAttribute('value');
@@ -228,17 +219,30 @@
                     }
                 },
                 recupererPanierSousFormeDeTableau: function () {
+
                     this.$http.get('recuperation/tableau/panier')
                             .then(function (data) {
                                         //console.log("Recuperation compétences OK");
                                         //console.log(data);
+                                        console.log('recupererPanierSousFormeDeTableauvvvvvvvvvvvvvvvvvvvvvvvvvvvv');
                                         this.$set('tableauPanier', data.data);
+                                        console.log('ddddddddddddd');
+
                                         //this.competences= data.data;
                                         console.log(this.tableauPanier);
                                         if (parseInt(this.tableauPanier[3]) > 0) {
                                             vm.btn_achat = true;
                                         }
                                         console.log("Recuperation tableauPanier  OK");
+                                        Vue.nextTick(function () {
+                                            // the form element to encrypt
+                                            var form = document.getElementById('adyen-encrypted-form');
+                                            // See adyen.encrypt.simple.html for details on the options to use
+                                            var options = {};
+                                            // Create the form.
+                                            // Note that the method is on the Adyen object, not the adyen.encrypt object.
+                                            adyen.createEncryptedForm(form, options);
+                                        });
                                     }.bind(this),
                                     function (data) {
                                         console.log("Recuperation tableauPanier PAS OK");

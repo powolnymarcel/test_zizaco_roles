@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Adyen\Service;
+use App\Commande;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Produit;
 use Cart;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class EcommerceController extends Controller
@@ -31,10 +33,12 @@ class EcommerceController extends Controller
 
     public function ajoutProduitPanier(Request $request){
         $leProduit=Produit::where('id','=',$request->id)->first();
-        Cart::add([ 'id' => $leProduit->id,
-            'name' => $leProduit->nom,
-            'qty' => 1,
-            'price' => $leProduit->prix]);
+        Cart::add([
+                    'id' => $leProduit->id,
+                    'name' => $leProduit->nom,
+                    'qty' => 1,
+                    'price' => $leProduit->prix
+                ]);
         $contenuPanier = Cart::content();
         $cartSubtotal = Cart::subtotal() ;
         $cartTax = Cart::tax();
@@ -56,6 +60,7 @@ class EcommerceController extends Controller
 
     public function verficationPaiement(Request $request)
     {
+
         //ON recupere le panier
         $contenuPanier= Cart::content();
 
@@ -85,8 +90,6 @@ class EcommerceController extends Controller
 
         //bcmul est une extension de BC MATH, permet de convertir le pric en CENTS, en géneral TOUT les services de paiements veulent recevoir un prix indiqué en cents
         $prix_en_cents = bcmul($total_a_payer, 100);
-
-
         //Les parametres ADYEN (service de paiement)
         $req = array(
             "action" => "Payment.authorise",
@@ -100,17 +103,18 @@ class EcommerceController extends Controller
             "paymentRequest.fraudOffset" => "0",
             "paymentRequest.additionalData.card.encrypted.json" => $request['adyen-encrypted-data']
         );
-
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "https://pal-test.adyen.com/pal/adapter/httppost");
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC  );
-        curl_setopt($ch, CURLOPT_USERPWD, "ws@Company.Ondego:TON_PASSWPRD");
+        curl_setopt($ch, CURLOPT_USERPWD, "ws@Company.Ondego:TONPASSWORD");
         curl_setopt($ch, CURLOPT_POST,1);
         curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($req));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         $result = curl_exec($ch);
+       // dd($result);
+
         //print_r(($result));
         if($result === false){
             echo "Error: " . curl_error($ch);
@@ -127,15 +131,30 @@ class EcommerceController extends Controller
              * - refusalReason: If the payment was refused, the refusal reason.
              */
             parse_str($result,$result);
+            //dd($result);
             //print_r(($result));
             if ($result['paymentResult_resultCode'] =='Refused'){
-                //Paiement refuse et autorisé
+                //Paiement refusé
                 echo 0;
             }
             if ($result['paymentResult_resultCode'] =='Authorised'){
                 //Paiement accepté et autorisé
-                echo 42;
+                $utilisateur = Auth::user();
+                $commande = new Commande;
+                $commande->user_id=$utilisateur->id;
+                $commande->paiement=1;
+                $commande->save();
+                foreach ($contenuPanier as $itemPanier)
+                {
+                    $commande->produits()->attach(Produit::where('id', $itemPanier->id)->first());
+
+                }
+                Cart::destroy();
+                return redirect()->route('mon_compte');
+
+
             }
+            
 
 
         }

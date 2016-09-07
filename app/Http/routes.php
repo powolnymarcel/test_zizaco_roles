@@ -18,20 +18,22 @@ Route::auth();
 Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 {
     Route::get('/', ['as' => 'accueil','uses'=>'PostController@index']);
-
     Route::post('/verficationPaiement', ['as' => 'verficationPaiement','uses'=>'EcommerceController@verficationPaiement']);
-    
-    //Les shortcut appli
+
+    //********************************************************************************************Les shortcut appli
     Route::get('/destructionsession', ['as' => 'destructionsession',function(){
         Session::flush();
         return redirect()->route('accueil');
     }]);
+    Route::get('/destructionpanier', ['as' => 'destructionpanier',function(){
+        Cart::destroy();
+        return redirect()->route('accueil');
+    }]);
+
     Route::get('/logs', ['as' => 'logs', function () {
         $logs = \File::get(storage_path().'/logs/laravel.log');
         dd($logs);
     }]);
-    
-
     Route::get('/phpinfo', ['as' => 'phpinfo', function () {
         phpinfo();
     }]);
@@ -39,8 +41,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
         \File::delete(storage_path().'/logs/laravel.log');
         return redirect()->route('accueil');
     }]);
-    
-    
+    //********************************************************************************************Les shortcut appli FIN
+
+
+    Route::get('/mon_compte', ['as' => 'mon_compte','uses'=>'AccountController@mon_compte']);
 
     Route::get('/post/{slug}', ['as' => 'lepost','uses'=>'PostController@lePost']);
     Route::get('/posts/{tag}', ['as' => 'posts.tag','uses'=>'PostController@postsParTag']);

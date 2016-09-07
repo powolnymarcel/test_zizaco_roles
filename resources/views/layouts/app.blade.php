@@ -54,6 +54,13 @@
 
 
                         @endif
+                        @if (!Auth::guest())
+                            <li>
+                                <a href="{{ url(LaravelLocalization::getCurrentLocale().'/mon_compte') }}">{{trans('traduction.moncompte')}}</a>
+
+                            </li>
+                        @endif
+
                 </ul>
 
                 <!-- Right Side Of Navbar -->

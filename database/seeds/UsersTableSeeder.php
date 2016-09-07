@@ -20,7 +20,7 @@ class UsersTableSeeder extends Seeder
             $user=User::create([
                 'name' => $faker->userName(),
                 'email' => $faker->safeEmail,
-                'password' => 'secret'
+                'password' => bcrypt('secret')
             ]);
             $rand= rand(1,7);
             $user->attachRole($rand);
