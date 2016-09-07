@@ -10,6 +10,10 @@ return [
     'prix' => 'Price',
     'nom' => 'Name',
     'trier' => 'Orde by',
+    'panier' => 'Basket',
+    'payer' => 'Pay',
+    'produit' => 'Products',
+    'quantite' => 'Quantity',
     'postele' => 'Posted',
     'etiquette' => 'Tags',
     'youare' => 'You are',
@@ -17,7 +21,6 @@ return [
     'utilisateur' => 'User',
     'notag' => 'No tgas',
     'pasDePost' => 'No posts',
-
     'bienvenu' => 'Welcome',
     'enVente'=>'Products to sell'
 ];
